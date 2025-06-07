@@ -1,0 +1,6 @@
+@IrviQuiz.API_HostAddress = http://localhost:5036
+
+GET {{IrviQuiz.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
