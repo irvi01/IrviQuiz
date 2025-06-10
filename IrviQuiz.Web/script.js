@@ -71,7 +71,7 @@ function restartQuiz() {
 
 async function loadQuestion() {
     clearInterval(timer);
-    timeLeft = 10;
+    timeLeft = 20;
     timerEl.innerText = `${translations.general.time_left || "Time"}: ${timeLeft}`;
 
     if (questions.length === 0) {

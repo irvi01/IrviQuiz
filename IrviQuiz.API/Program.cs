@@ -1,3 +1,5 @@
+using IrviQuiz.API.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(static options =>
@@ -11,6 +13,8 @@ builder.Services.AddCors(static options =>
 });
 
 builder.Services.AddControllers();
+
+builder.Services.AddHttpClient<LibreTranslateService>();
 
 var app = builder.Build();
 
