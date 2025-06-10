@@ -1,8 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors(options =>
+builder.Services.AddCors(static options =>
 {
-    options.AddDefaultPolicy(policy =>
+    options.AddDefaultPolicy(static policy =>
     {
         policy.AllowAnyOrigin()
               .AllowAnyHeader()
@@ -10,12 +10,13 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddControllers();
 
-builder.Services.AddControllers(); 
 var app = builder.Build();
+
 app.UseHttpsRedirection();
 app.UseCors();
 app.UseAuthorization();
 
-app.MapControllers(); 
+app.MapControllers();
 app.Run();

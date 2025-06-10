@@ -1,59 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>IrviQuiz</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>IrviQuiz</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon-32x32.png" type="image/x-icon" />
 </head>
 <body>
-    <div class="container">
-        <h1>IrviQuiz 🧠</h1>
+  <div class="container">
+    <h1></h1>
 
-        <div id="start-screen">
-            <p>Bem-vindo ao Irvi Quiz!</p>
-            <label for="question-count">Quantidade de perguntas (5-20):</label>
-            <input type="number" id="question-count" min="5" max="20" value="5">
-            <br><br>
-            <label for="language-select">Idioma:</label>
-            <select id="language-select">
-                <option value="en">Inglês</option>
-                <option value="pt">Português</option>
-                <option value="es">Espanhol</option>
-            </select>
-            <br><br>
-            <button onclick="startQuiz()">Começar</button>
-        </div>
-
-        <div id="quiz-box" style="display:none;">
-            <p id="question">Carregando pergunta...</p>
-            <div id="answers"></div>
-            <div class="spacer"></div>
-            <div class="info">
-                <span id="timer">Tempo: 10</span>
-                <span id="score">Acertos: 0</span>
-            </div>
-            <button id="next-btn" onclick="loadQuestion()">Próxima Pergunta</button>
-        </div>
-
-        <div id="end-screen" style="display:none;">
-            <p id="final-score"></p>
-            <button onclick="restartQuiz()">Reiniciar Quiz</button>
-        </div>
+    <div id="start-screen">
+      <p class="subtitle"></p>
+      <label for="question-count"></label>
+      <input type="number" id="question-count" min="5" max="20" value="5" />
+      <br /><br />
+      <label for="language-select"></label>
+      <select id="language-select">
+        <option value="en">Inglês</option>
+        <option value="pt">Português</option>
+        <option value="es">Espanhol</option>
+      </select>
+      <br /><br />
+      <button id="reload"></button>
     </div>
 
-    <script>
-        function decodeHTML(text) {
-            try {
-                 const html = decodeURIComponent(text);
-                 const txt = document.createElement("textarea");
-                txt.innerHTML = html;
-                 return txt.value;
-            } 
-            catch {
-                return text;
-            }
-        }
-    </script>
-    <script src="script.js"></script>
+    <div id="quiz-box" style="display: none">
+      <p id="question"></p>
+      <div id="answers"></div>
+      <div class="spacer"></div>
+      <div class="info">
+        <span id="timer"></span>
+        <span id="score"></span>
+      </div>
+      <button id="next-btn"></button>
+    </div>
+
+    <div id="end-screen" style="display: none">
+      <p id="final-score"></p>
+      <button id="restart-btn"></button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

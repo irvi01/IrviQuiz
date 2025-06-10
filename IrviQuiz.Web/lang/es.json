@@ -1,0 +1,22 @@
+{
+  "general": {
+    "title": "IrviQuiz🧠",
+    "subtitle": "¡Bienvenido a Irvi Quiz! Pon a prueba tus conocimientos generales de forma divertida.",
+    "amount_label": "Elige cuántas preguntas (5-20):",
+    "language_label": "Idioma:",
+    "start_button": "Comenzar",
+    "next_button": "Siguiente Pregunta",
+    "final_score_prefix": "Respondiste correctamente a",
+    "final_score_suffix": "preguntas.",
+    "correct_answers": "Aciertos",
+    "time_left": "Tiempo",
+    "restart_button": "Reiniciar Quiz"
+  },
+  "messages": {
+    "loading_questions": "Cargando preguntas...",
+    "error_loading": "Error al cargar las preguntas.",
+    "quiz_finished": "¡Quiz finalizado!",
+    "correct": "Respuesta Correcta",
+    "wrong": "Respuesta Incorrecta"
+  }
+}

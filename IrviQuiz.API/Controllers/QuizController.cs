@@ -22,7 +22,6 @@ public class QuizController : ControllerBase
              PropertyNameCaseInsensitive = true
         });
 
-
         var questions = data?.Results.Select(q =>
         {
             var allAnswers = q.Incorrect_Answers.Append(q.Correct_Answer).OrderBy(_ => Guid.NewGuid()).ToList();
@@ -33,6 +32,7 @@ public class QuizController : ControllerBase
                 CorrectAnswer = HttpUtility.HtmlDecode(q.Correct_Answer)
             };
         }).ToList();
+
         Console.WriteLine($"Perguntas retornadas: {questions?.Count ?? 0}");
         return Ok(questions);
     }

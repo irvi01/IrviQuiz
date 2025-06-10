@@ -11,4 +11,4 @@ node_modules/
 *.bak
 .env
 .env.*
-
+nginx*
