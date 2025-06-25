@@ -12,3 +12,10 @@ node_modules/
 .env
 .env.*
 nginx*
+*.tfstate
+*.tfstate.backup
+crash.log
+.terraform/
+Infra/Terraform/kubectl
+Infra/Terraform/kubectl.sha256
+.terraform.lock.hcl
