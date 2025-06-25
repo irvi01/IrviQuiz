@@ -54,7 +54,7 @@ jobs:
           🔧 Backend: $IMAGE_API:$TAG
           🎨 Frontend: $IMAGE_WEB:$TAG
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_RELEASE_TOKEN }}
         TAG: ${{ env.TAG }}
         IMAGE_API: ${{ env.IMAGE_API }}
         IMAGE_WEB: ${{ env.IMAGE_WEB }}
