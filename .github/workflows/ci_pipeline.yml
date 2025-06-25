@@ -20,26 +20,21 @@ jobs:
 
     - name: (Simulado) Rodar testes e lint
       run: |
-        echo "🔍 Rodando lint e testes simulados..."
-        echo "✅ Testes fictícios passaram com sucesso!"
+        echo "Rodando lint e testes simulados..."
+        echo "Testes fictícios passaram com sucesso!"
 
     - name: Gerar TAG automática
       run: echo "TAG=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
 
-    - name: Login no Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-
     - name: Build e push do backend
       run: |
-        docker build -t $IMAGE_API:${{ env.TAG }} -t $IMAGE_API:latest ./IrviQuiz.API
-        docker push $IMAGE_API:${{ env.TAG }}
+        docker build -t $IMAGE_API:$TAG -t $IMAGE_API:latest ./IrviQuiz.API
+        docker push $IMAGE_API:$TAG
         docker push $IMAGE_API:latest
 
     - name: Build e push do frontend
       run: |
-        docker build -t $IMAGE_WEB:${{ env.TAG }} -t $IMAGE_WEB:latest ./IrviQuiz.Web
-        docker push $IMAGE_WEB:${{ env.TAG }}
+        docker build -t $IMAGE_WEB:$TAG -t $IMAGE_WEB:latest ./IrviQuiz.Web
+        docker push $IMAGE_WEB:$TAG
         docker push $IMAGE_WEB:latest
+
