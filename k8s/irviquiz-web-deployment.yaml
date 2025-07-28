@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: irviquiz-web
-        image: irvids/irviquiz-web:20250728155315
+        image: irvids/irviquiz-web:20250728155359
         ports:
         - containerPort: 80
 ---
