@@ -19,6 +19,6 @@ crash.log
 Infra/Terraform/kubectl
 Infra/Terraform/kubectl.sha256
 .terraform.lock.hcl
-Infra/Terradform/*.tfvars
+Infra/Terraform/*.tfvars
 terraform.tfvars.json
 terraform.tfvars
