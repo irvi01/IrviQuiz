@@ -49,13 +49,13 @@ jobs:
         sed -i "s|\(image: irvids/irviquiz-api:\).*|\1$TAG|" k8s/irviquiz-api-deployment.yaml
         sed -i "s|\(image: irvids/irviquiz-web:\).*|\1$TAG|" k8s/irviquiz-web-deployment.yaml
 
-    - name: Commit e push of repository alterations
+    - name: Commit e push das alterações no repositório
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git add k8s/*.yaml
         git commit -m "Atualiza manifests para TAG $TAG"
-        git push
+        git push https://x-access-token:${{ secrets.GH_RELEASE_TOKEN }}@github.com/irvi01/IrviQuiz.git
 
     - name: New release body
       run: |
