@@ -17,13 +17,15 @@ jobs:
     steps:
     - name: Code Checkout
       uses: actions/checkout@v3
+      with:
+        persist-credentials: false  # Evita conflito com GITHUB_TOKEN
 
-    - name: (Simulated for now) Tests and lint
+    - name: (Simulated) Tests and lint
       run: |
-        echo "Rodando lint e testes simulados..."
-        echo "Testes fictícios passaram com sucesso!"
+        echo "✅ Rodando lint e testes simulados..."
+        echo "✅ Testes fictícios passaram com sucesso!"
 
-    - name: TAG generation
+    - name: Generate TAG
       run: echo "TAG=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
 
     - name: Docker Login
@@ -32,32 +34,35 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Backend build and push
+    - name: Build & Push Backend
       run: |
         docker build -t $IMAGE_API:$TAG -t $IMAGE_API:latest ./IrviQuiz.API
         docker push $IMAGE_API:$TAG
         docker push $IMAGE_API:latest
 
-    - name: Frontend build and push
+    - name: Build & Push Frontend
       run: |
         docker build -t $IMAGE_WEB:$TAG -t $IMAGE_WEB:latest ./IrviQuiz.Web
         docker push $IMAGE_WEB:$TAG
         docker push $IMAGE_WEB:latest
 
-    - name: New tag in manifests
+    - name: Update Kubernetes manifests with new TAG
       run: |
         sed -i "s|\(image: irvids/irviquiz-api:\).*|\1$TAG|" k8s/irviquiz-api-deployment.yaml
         sed -i "s|\(image: irvids/irviquiz-web:\).*|\1$TAG|" k8s/irviquiz-web-deployment.yaml
 
-    - name: Commit e push das alterações no repositório
+    - name: Commit & Push updated manifests
+      env:
+        GH_TOKEN: ${{ secrets.GH_PUSH_TOKEN }}
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/irvi01/IrviQuiz.git
         git add k8s/*.yaml
-        git commit -m "Atualiza manifests para TAG $TAG"
-        git push https://x-access-token:${{ secrets.GH_PUSH_TOKEN }}@github.com/irvi01/IrviQuiz.git
+        git commit -m "Atualiza manifests para TAG $TAG" || echo "Nenhuma alteração para commitar"
+        git push origin master
 
-    - name: New release body
+    - name: Generate release body
       run: |
         echo "Nova versão do IrviQuiz gerada automaticamente." > release_body.md
         echo "Backend: $IMAGE_API:$TAG" >> release_body.md
@@ -71,4 +76,3 @@ jobs:
         body_path: release_body.md
       env:
         GITHUB_TOKEN: ${{ secrets.GH_RELEASE_TOKEN }}
-        TAG: ${{ env.TAG }}
