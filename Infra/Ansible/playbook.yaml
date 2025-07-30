@@ -77,7 +77,12 @@
           --selector=app.kubernetes.io/component=controller
           --timeout=180s                
 
-    - name: Apply IrviQuiz Ingress
+    - name: Apply IrviQuiz API Ingress
       kubernetes.core.k8s:
         state: present
-        src: files/ingress-irviquiz.yaml
+        src: files/ingress-irviquiz-api.yaml
+
+    - name: Apply IrviQuiz Web Ingress
+      kubernetes.core.k8s:
+        state: present
+        src: files/ingress-irviquiz-web.yaml

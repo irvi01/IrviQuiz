@@ -1,29 +1,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: irviquiz-ingress
+  name: irviquiz-web-ingress
   namespace: irviquiz
-  annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/proxy-body-size: 10m
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
     - host: quiz.yrwing.com.br
       http:
         paths:
-          - path: /api(/|$)(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: irviquiz-api
-                port:
-                  number: 80
-
-          - path: /lang(/|$)(.*)
-            pathType: ImplementationSpecific
+          - path: /lang
+            pathType: Prefix
             backend:
               service:
                 name: irviquiz-web
@@ -38,8 +25,8 @@ spec:
                 port:
                   number: 80
 
-          - path: /(.*)
-            pathType: ImplementationSpecific
+          - path: /
+            pathType: Prefix
             backend:
               service:
                 name: irviquiz-web
