@@ -8,10 +8,6 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: 10m
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      location ~* ^/(lang|.*\.(css|js|png|jpg|jpeg|gif|ico))$ {
-        rewrite ^/(.*)$ /$1 break;
-      }
 spec:
   ingressClassName: nginx
   rules:
@@ -26,7 +22,22 @@ spec:
                 port:
                   number: 80
 
-          # SPA + Assets
+          - path: /lang(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: irviquiz-web
+                port:
+                  number: 80
+
+          - path: /.*\.(css|js|png|jpg|jpeg|gif|ico)$
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: irviquiz-web
+                port:
+                  number: 80
+
           - path: /(.*)
             pathType: ImplementationSpecific
             backend:
