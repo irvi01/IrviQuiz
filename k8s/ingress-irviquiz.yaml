@@ -3,10 +3,13 @@ kind: Ingress
 metadata:
   name: irviquiz-ingress
   namespace: irviquiz
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 10m
 spec:
   ingressClassName: nginx
   rules:
-    - host: "" 
+    - host: quiz.yrwing.com.br
       http:
         paths:
           - path: /

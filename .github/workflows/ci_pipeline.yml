@@ -76,3 +76,4 @@ jobs:
         body_path: release_body.md
       env:
         GITHUB_TOKEN: ${{ secrets.GH_RELEASE_TOKEN }}
+        TAG: ${{ env.TAG }}
