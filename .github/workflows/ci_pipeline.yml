@@ -3,6 +3,8 @@ name: CI - IrviQuiz
 on:
   push:
     branches: [ "master" ]
+    paths-ignore:
+      - 'k8s/**' 
   pull_request:
     branches: [ "master" ]
 
@@ -12,13 +14,14 @@ env:
 
 jobs:
   build-test-push:
+    if: github.actor != 'github-actions[bot]' 
     runs-on: ubuntu-latest
 
     steps:
     - name: Code Checkout
       uses: actions/checkout@v3
       with:
-        persist-credentials: false  # Evita conflito com GITHUB_TOKEN
+        persist-credentials: false  
 
     - name: (Simulated) Tests and lint
       run: |
@@ -36,12 +39,14 @@ jobs:
 
     - name: Build & Push Backend
       run: |
+        echo "📦 Buildando Backend..."
         docker build -t $IMAGE_API:$TAG -t $IMAGE_API:latest ./IrviQuiz.API
         docker push $IMAGE_API:$TAG
         docker push $IMAGE_API:latest
 
     - name: Build & Push Frontend
       run: |
+        echo "📦 Buildando Frontend..."
         docker build -t $IMAGE_WEB:$TAG -t $IMAGE_WEB:latest ./IrviQuiz.Web
         docker push $IMAGE_WEB:$TAG
         docker push $IMAGE_WEB:latest
@@ -59,8 +64,7 @@ jobs:
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/irvi01/IrviQuiz.git
         git add k8s/*.yaml
-        git commit -m "Atualiza manifests para TAG $TAG" || echo "Nenhuma alteração para commitar"
-        git push origin master
+        git diff --cached --quiet && echo "Nenhuma alteração para commitar" || (git commit -m "Atualiza manifests para TAG $TAG" && git push origin master)
 
     - name: Generate release body
       run: |
