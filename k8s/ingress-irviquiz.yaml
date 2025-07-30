@@ -6,25 +6,38 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 10m
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
     nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      location ~ ^/lang/ {
+        rewrite ^/lang/(.*)$ /lang/$1 break;
+      }
 spec:
   ingressClassName: nginx
   rules:
     - host: quiz.yrwing.com.br
       http:
         paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: irviquiz-web
-                port:
-                  number: 80
           - path: /api(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
               service:
                 name: irviquiz-api
+                port:
+                  number: 80
+
+          - path: /lang(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: irviquiz-web
+                port:
+                  number: 80
+
+          - path: /(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: irviquiz-web
                 port:
                   number: 80
