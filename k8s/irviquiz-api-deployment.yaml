@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: irviquiz-api
-        image: irvids/irviquiz-api:20250730205049
+        image: irvids/irviquiz-api:20250731002624
         ports:
         - containerPort: 5036
 ---
