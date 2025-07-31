@@ -37,11 +37,11 @@
         name: ingress-nginx
         state: present
 
-    - name: Install NGINX Ingress Controller
+    - name: Install or upgrade NGINX Ingress Controller
       ansible.builtin.shell: |
-       helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-       helm repo update
-        helm install ingress-nginx ingress-nginx/ingress-nginx \
+        helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+        helm repo update
+        helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
         --namespace ingress-nginx --create-namespace \
         --set controller.service.type=LoadBalancer \
         --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"="/healthz" \
@@ -77,12 +77,4 @@
           --selector=app.kubernetes.io/component=controller
           --timeout=180s                
 
-    - name: Apply IrviQuiz API Ingress
-      kubernetes.core.k8s:
-        state: present
-        src: files/ingress-irviquiz-api.yaml
-
-    - name: Apply IrviQuiz Web Ingress
-      kubernetes.core.k8s:
-        state: present
-        src: files/ingress-irviquiz-web.yaml
+ 
